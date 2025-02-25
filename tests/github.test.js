@@ -29,23 +29,22 @@ describe("Fluxo Completo de Testes no GitHub", () => {
       throw new Error("Autenticação falhou");
     }
   });
-    // 🔹 Teste 2: Acessar a aba "Repositories"
   test("Deve navegar até a aba 'Repositories'", async () => {
-    await page.waitForSelector("button[aria-label='Open user navigation menu']", { visible: true, timeout: 8000 });
-    await page.click("button[aria-label='Open user navigation menu']");
+    try {
+      await navigateToRepositories(page);
 
-    // Aguarda e clica no link de "Repositories"
-    await page.waitForSelector("a[href*='?tab=repositories']", { visible: true });
-    
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: "networkidle2" }),
-      page.click("a[href*='?tab=repositories']")
-  ]);
-  // Aguarda que algum elemento exclusivo da página carregue
-    await page.waitForSelector("#repositories-tab", { visible: true, timeout: 10000 });
+      // Acessa um repositório específico
+      await page.waitForSelector("a[href='/riqsbrito/repositoriotest']", { visible: true });
+      await page.click("a[href='/riqsbrito/repositoriotest']");
 
-    let currentUrl = await page.url();
-    console.log("URL atual:", currentUrl);
-    expect(currentUrl).toContain("/riqsbrito?tab=repositories");
+      // Acessa a aba de pull requests
+      await page.waitForSelector("#pull-requests-tab", { visible: true });
+      await page.click("#pull-requests-tab");
+      
+      // Espera pela página de comparação de pull requests
+      await page.waitForSelector('a[href="/riqsbrito/repositoriotest/compare"]', { visible: true });
+    } catch (error) {
+      throw new Error("Erro ao navegar até a aba 'Repositories' ou acessar Pull Requests: " + error.message);
+    }
   });
 });
