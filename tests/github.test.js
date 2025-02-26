@@ -57,7 +57,7 @@ describe("Fluxo Completo de Testes no GitHub", () => {
       await createNewRepository(page, newRepoName);
 
       // Clica no botão "Create repository"
-      await page.waitForSelector('.Box-sc-g0xbh4-0.dlBivO button', { visible: true });
+      await page.waitForSelector('.Box-sc-g0xbh4-0.dlBivO button', { visible: true, timeout: 10000 });
       await page.click('.Box-sc-g0xbh4-0.dlBivO button');
 
       // Espera a página do repositório carregar

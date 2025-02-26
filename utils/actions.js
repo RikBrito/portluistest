@@ -8,9 +8,9 @@ async function login(page, email, password) {
     
     await page.waitForSelector('[aria-label="Open global navigation menu"]', { visible: true, timeout: 5000 });
     await page.click("button[aria-label='Open user navigation menu']");
-    await page.waitForSelector('div[title="Henrique brito"]', { visible: true, timeout: 10000 });
+    await page.waitForSelector('div[title="Henrique Brito"]', { visible: true, timeout: 10000 });
     const texto = await page.evaluate(() => {
-      return document.querySelector('div[title="Henrique brito"]').textContent.trim();
+      return document.querySelector('div[title="Henrique Brito"]').textContent.trim();
     });   
   }
   
@@ -33,7 +33,7 @@ async function login(page, email, password) {
     await page.click('a[href="/new"]');
   
     // Preenche o nome do repositório
-    await page.waitForSelector('input[aria-describedby="RepoNameInput-is-available RepoNameInput-message"]', { visible: true });
+    await page.waitForSelector('input[aria-describedby="RepoNameInput-is-available RepoNameInput-message"]', { visible: true, timeout: 5000 });
     await page.type('input[aria-describedby="RepoNameInput-is-available RepoNameInput-message"]', repoName);
   }
 
